@@ -1,0 +1,18 @@
+spring:
+  cloud:
+    config:
+           # 配置文件前缀
+      name: application
+           # 配置文件后缀
+      profile: feign
+           # 配置中心地址
+      uri: http://localhost:60000/
+      # git分支
+      lable: master
+# 暴露监控节点  该工程启动之后 通过http:localhost:30080/actuator查看监控节点 发送重新加载的监控节点接口,重启config-server
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ['*']
+        

@@ -1,0 +1,17 @@
+server:
+  port: 10002
+# 配置服务的名称
+spring:
+  application:
+    name: eureka10002
+eureka:
+  instance:
+    hostname: localhost
+  client:
+       # 注册中心的地址
+    service-url:
+      defaultZone: http://www.aa.com:10000/eureka,http://www.bb.com:10001/eureka
+       # 当前服务不能去调用其他服务
+    fetch-registry: false
+       # 注册中心自我注册
+    register-with-eureka: false

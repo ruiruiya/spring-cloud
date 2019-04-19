@@ -1,0 +1,13 @@
+dependencies{
+    compile(
+		//项目依赖
+		//project(':entity'),
+        //jar包依赖 
+        libraries.'spring-boot-configuration-processor',  //注意 gateway不能引入spring-boot-starter-web依赖
+        libraries.'eureka-client',
+        libraries.'spring-cloud-starter-gateway',
+        libraries.'spring-cloud-starter-netflix-hystrix',
+        libraries.'spring-boot-starter-data-redis',//gateway令牌桶限流算法使用的redis依赖
+    )
+    
+}

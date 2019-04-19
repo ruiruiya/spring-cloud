@@ -1,0 +1,49 @@
+server:
+  port: 40000
+eureka:
+  client:
+    service-url:
+      defaultZone: http://www.aa.com:10000/eureka,http://www.bb.com:10001/eureka,http://www.cc.com:10002/eureka
+    register-with-eureka: true
+# Java代码的方式配置了路由规则 这里注释
+spring:
+  applicaiton:
+    name: gateway
+  cloud:
+    gateway:
+      # 配置gateway的路由功能
+      routes:
+        # 路由feign
+        - id: consumer-feign
+          uri: lb://COMSUMER-FEIGN
+          # 如何判断当前请求是要访问feign的
+          predicates:
+            - Path=/a/**
+          # 过滤路径的第一个(a),若不过滤会直接把/a/**作为请求进行转发,会出现404错误
+          filters:
+            - StripPrefix=1
+        # 路由ribbon
+        - id: consumer-ribbon
+          uri: lb://COMSUMER-RIBBON
+          predicates:
+            - Path=/b/**
+          filters:
+            - StripPrefix=1
+            # 路由熔断的过滤器
+            - name: Hystrix
+              args:
+                name: default
+                fallbackUri: forward:/fallback
+            # 配置限流过滤器
+            - name: RequestRateLimiter
+              args:
+                # 限流规则的bean对象
+                key-resolver: '#{@remoteAddrKeyResolver}'
+                # 每秒存放令牌的速率
+                redis-rate-limiter.replenishRate: 1
+                # 令牌桶容量
+                redis-rate-limiter.burstCapacity: 5
+  # Redis Configuration
+  redis: 
+    host: 120.77.174.72
+    port: 6379

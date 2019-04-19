@@ -1,0 +1,4 @@
+server:
+  port: 20000
+spring:  application:    name: proveder
+eureka:  client:    service-url:      defaultZone: http://www.aa.com:10000/eureka,http://www.bb.com:10001/eureka,http://www.cc.com:10002/eureka

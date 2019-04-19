@@ -1,0 +1,12 @@
+dependencies{
+    compile(
+		//项目依赖
+		//project(':entity'),
+        //jar包依赖
+        libraries.'spring-boot-configuration-processor',
+        libraries.'spring-boot-configuration-processor',
+        libraries.'spring-cloud-config-server',
+        libraries.'spring-boot-starter-web',
+        //libraries.'spring-cloud-starter-eureka',
+    )
+}

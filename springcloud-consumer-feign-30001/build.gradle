@@ -1,0 +1,14 @@
+dependencies{
+    compile(
+		//项目依赖
+		//project(':entity'),
+        //jar包依赖
+        libraries.'spring-boot-configuration-processor',
+        libraries.'spring-boot-starter-web',
+        libraries.'eureka-client',
+        libraries.'spring-cloud-starter-openfeign',// feign集成了hystrix,无需再引入hystrix的依赖
+        libraries.'hystrix-metrics-event-stream',//仪表盘配置servlet
+        libraries.'spring-cloud-config-client',
+        libraries.'spring-boot-starter-actuator',// 监控config-server的配置文件更新之后,会重新加载
+    )
+}

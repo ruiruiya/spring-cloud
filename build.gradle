@@ -1,0 +1,73 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.2.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+apply from: 'dependency.gradle'
+
+allprojects {
+    group 'com.mirror'
+    version '1.0-SNAPSHOT'
+
+    //应用插件
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    //Java版本
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    //maven仓库
+    repositories {
+    	//华为云和 Sonatype联合发布的中国官方 Maven中央仓库
+	    maven {
+	        url 'https://mirrors.huaweicloud.com/repository/maven/'
+	        credentials {
+	            username 'anonymous'
+	            password 'devcloud'
+	        }
+	    }
+    	//阿里云
+    	maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+    	//maven中央仓库
+        mavenCentral()
+    }
+
+    //依赖
+    dependencies{
+        //compile('org.springframework.boot:spring-boot-starter-web')
+        compile('org.springframework.cloud:spring-cloud-starter')
+    }
+    
+    dependencyManagement {
+        imports {
+            //加上此配置后，如果需要引用springcloud的组件，就不需要再提供版本信息
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${versions.spriongCloud}"
+        }
+    }
+}
+//项目构建脚本
+subprojects {
+    //构建项目基本结构
+    task makeJavaDir(){
+        sourceSets*.java.srcDirs*.each { it.mkdirs() }
+        sourceSets*.resources.srcDirs*.each { it.mkdirs()}
+    }
+    //构建build.gradle文件
+    task makeBuildGradle(){
+        File file = new File("${projectDir}/build.gradle")
+        file.createNewFile()
+    }
+    //构建application.yml
+    task makeYml(){
+        File file = new File("${projectDir}/src/main/resources/application.yml")
+        file.createNewFile()
+    }
+}

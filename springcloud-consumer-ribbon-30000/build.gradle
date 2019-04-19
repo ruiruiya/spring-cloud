@@ -1,0 +1,12 @@
+dependencies{
+    compile(
+		//项目依赖
+		//project(':entity'),
+        //jar包依赖
+        libraries.'spring-boot-configuration-processor',
+        libraries.'eureka-client',
+        libraries.'spring-cloud-starter-netflix-ribbon',
+        libraries.'spring-cloud-starter-netflix-hystrix',
+        libraries.'spring-boot-starter-web',
+    )
+}
