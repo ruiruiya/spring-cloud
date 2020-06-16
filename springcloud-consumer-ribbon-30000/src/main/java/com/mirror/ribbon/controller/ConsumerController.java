@@ -11,14 +11,14 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 public class ConsumerController {
 
 	@Autowired
-	private RestTemplate reetTemplate;
+	private RestTemplate restTemplate;
 	
 	@HystrixCommand(fallbackMethod = "fallBack")
 	@GetMapping("/test")
 	public String hello() {
 		
 		//URL写提供的注册中心的名字,相同名字的提供者会被eureka认为是集群
-		String result = reetTemplate.getForObject("http://PROVEDER/hello", String.class);
+		String result = restTemplate.getForObject("http://PROVEDER/hello", String.class);
 		return "消费者30000被调用,结果:"+result;
 	}
 	
